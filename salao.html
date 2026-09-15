@@ -59,7 +59,9 @@
     font-size: 17px;
     line-height: 1.62;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    /* sem overflow-x:hidden de propósito: se algo transbordar, tem que aparecer
+       barra de rolagem em vez de a palavra ser cortada em silêncio */
+    overflow-wrap: break-word;
   }
   ::selection { background: var(--accent); color: var(--on-accent); }
   a { color: var(--accent); }
@@ -245,10 +247,16 @@
 
   /* ================= faq ================= */
   .faq { margin-top: 36px; display: flex; flex-direction: column; }
-  .qa { padding: 24px 0; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 7px; }
+  .qa { padding: 20px 0; border-top: 1px solid var(--rule); }
   .qa:last-child { border-bottom: 1px solid var(--rule); }
-  .q { font-weight: 600; letter-spacing: -0.015em; font-size: 1.08rem; }
-  .a { color: var(--muted); max-width: 66ch; text-wrap: pretty; }
+  .q {
+    font-weight: 600; letter-spacing: -0.015em; font-size: 1.08rem; cursor: pointer;
+    list-style: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+  }
+  .q::-webkit-details-marker { display: none; }
+  .q::after { content: "+"; font-family: var(--mono); font-size: 1.2rem; line-height: 1; color: var(--accent); flex: none; margin-top: 2px; }
+  .qa[open] .q::after { content: "−"; }
+  .a { color: var(--muted); max-width: 66ch; text-wrap: pretty; margin-top: 8px; }
 
   /* ================= close ================= */
   .close { padding: 92px 0; border-top: 1px solid var(--rule); position: relative; overflow: hidden; }
@@ -278,7 +286,7 @@
 
   /* ================= telefone: moldura e trocas ================= */
   .only-mob { display: none; }
-  .pframe { max-width: 290px; margin: 0 auto; border: 8px solid #1E2427; border-radius: 30px; overflow: hidden; background: #1E2427; box-shadow: 0 26px 50px -26px rgba(0,0,0,0.9); }
+  .pframe { max-width: 232px; margin: 0 auto; border: 8px solid #1E2427; border-radius: 30px; overflow: hidden; background: #1E2427; box-shadow: 0 26px 50px -26px rgba(0,0,0,0.9); }
   .pframe img { border-radius: 22px; }
   .pcap { margin-top: 14px; text-align: center; color: var(--dim); }
 
@@ -289,80 +297,80 @@
     .only-mob { display: block; }
     .only-desk { display: none; }
 
-    body { font-size: 16px; }
+    body { font-size: 16px; line-height: 1.5; }
 
     /* respiro: seções mais curtas */
-    .sec { padding: 46px 0; }
-    .hero { padding: 40px 0 0; }
-    .hero-shot { margin-top: 32px; }
-    .close { padding: 52px 0; }
-    .sec-grid { gap: 16px; }
+    .sec { padding: 34px 0; }
+    .hero { padding: 28px 0 0; }
+    .hero-shot { margin-top: 22px; }
+    .close { padding: 40px 0; }
+    .sec-grid { gap: 11px; }
     .sec-label { padding-top: 0; }
 
-    h1 { font-size: clamp(2rem, 8.4vw, 2.6rem); letter-spacing: -0.03em; margin-bottom: 18px; }
-    .hero-sub { font-size: 1.02rem; margin-bottom: 26px; }
-    h2 { font-size: 1.55rem; margin-bottom: 12px; }
-    .lede { font-size: 1rem; }
-    .eyebrow { margin-bottom: 18px; }
+    h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); letter-spacing: -0.03em; margin-bottom: 14px; line-height: 1.08; }
+    .hero-sub { font-size: 0.99rem; margin-bottom: 20px; }
+    h2 { font-size: 1.38rem; margin-bottom: 9px; line-height: 1.16; }
+    .lede { font-size: 0.95rem; }
+    .eyebrow { margin-bottom: 14px; }
 
     /* botões ocupam a linha toda, alvo de toque cheio */
     .cta-row { gap: 10px; }
     .cta-row .btn, .case-links .btn { width: 100%; justify-content: center; }
 
     /* dores e processo: mais compactos */
-    .rows { margin-top: 24px; }
-    .row { grid-template-columns: 34px minmax(0, 1fr); gap: 14px; padding: 18px 0; }
+    .rows { margin-top: 18px; }
+    .row { grid-template-columns: 30px minmax(0, 1fr); gap: 11px; padding: 13px 0; }
     .row-n { font-size: 0.74rem; }
-    .proc { margin-top: 24px; }
-    .proc-item { grid-template-columns: 34px minmax(0, 1fr); gap: 14px; padding: 18px 0; }
+    .proc { margin-top: 18px; }
+    .proc-item { grid-template-columns: 30px minmax(0, 1fr); gap: 11px; padding: 13px 0; }
     .proc-t { font-size: 1.02rem; }
 
     /* passos: duas colunas em vez de cinco blocos empilhados */
-    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 24px; }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; margin-top: 18px; }
     .step { padding: 12px 0 0; }
     .step-t { font-size: 0.97rem; }
     .step-d { font-size: 0.85rem; }
 
     /* recursos: duas colunas compactas */
-    .feats { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; margin-top: 28px; }
-    .feat { padding: 14px 0; gap: 3px; }
+    .feats { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; margin-top: 20px; }
+    .feat { padding: 10px 0; gap: 2px; }
     .feat-h { gap: 8px; }
     .feat-h svg { width: 17px; height: 17px; }
     .feat-t { font-size: 0.93rem; }
     .feat-d { font-size: 0.84rem; line-height: 1.42; }
 
     /* resultados e planos */
-    .outs { margin-top: 24px; }
-    .out { padding: 18px 0; }
+    .outs { margin-top: 18px; }
+    .out { padding: 13px 0; }
     .out-t { font-size: 1.02rem; }
-    .plans { margin-top: 26px; gap: 14px; }
-    .plan { padding: 22px 20px; gap: 12px; }
+    .plans { margin-top: 20px; gap: 12px; }
+    .plan { padding: 18px 16px; gap: 9px; }
     .plan-t { font-size: 1.3rem; }
-    .plans-note { margin-top: 20px; padding-top: 18px; font-size: 0.95rem; }
+    .plans-note { margin-top: 16px; padding-top: 14px; font-size: 0.92rem; }
 
     /* agenda de exemplo */
-    .agenda-wrap { margin-top: 28px; }
+    .agenda-wrap { margin-top: 20px; }
     .agenda-top { padding: 13px 15px; }
     .agenda-day { font-size: 0.97rem; }
-    .appt { padding: 12px 15px; gap: 12px; }
+    .appt { padding: 10px 14px; gap: 10px; }
     .appt-time { font-size: 0.9rem; }
     .appt-name { font-size: 0.94rem; }
     .appt-svc { font-size: 0.83rem; }
 
     /* notas ao lado dos prints viram blocos abaixo */
-    .split { margin-top: 30px; gap: 20px; }
+    .split { margin-top: 22px; gap: 14px; }
 
-    .faq { margin-top: 24px; }
-    .qa { padding: 18px 0; }
-    .q { font-size: 1.02rem; }
-    .a { font-size: 0.97rem; }
+    .faq { margin-top: 18px; }
+    .qa { padding: 13px 0; }
+    .q { font-size: 1rem; }
+    .a { font-size: 0.94rem; margin-top: 6px; }
 
-    .chips { margin-top: 20px; gap: 7px; }
+    .chips { margin-top: 14px; gap: 6px; }
     .chip { font-size: 0.68rem; padding: 6px 10px; }
-    .facts { margin-top: 24px; gap: 14px; }
-    .case-links { margin-top: 26px; gap: 10px; }
-    .contacts { margin-top: 30px; }
-    .contact { padding: 16px 0; }
+    .facts { margin-top: 18px; gap: 11px; }
+    .case-links { margin-top: 20px; gap: 9px; }
+    .contacts { margin-top: 22px; }
+    .contact { padding: 13px 0; }
     .contact-v { font-size: 1rem; }
 
     /* espaço pra barra fixa não cobrir o rodapé */
@@ -822,34 +830,34 @@
     <div>
       <h2>O que todo mundo pergunta antes.</h2>
       <div class="faq">
-        <div class="qa">
-          <div class="q">Quanto custa?</div>
+        <details class="qa" open>
+          <summary class="q">Quanto custa?</summary>
           <div class="a">Depende do tamanho: quantos serviços, se vai ter pagamento online, se atende mais de uma profissional. Eu te passo um valor fechado depois da primeira conversa, antes de começar qualquer coisa — sem surpresa no meio do caminho.</div>
-        </div>
-        <div class="qa">
-          <div class="q">Eu preciso saber mexer em computador?</div>
+        </details>
+        <details class="qa" open>
+          <summary class="q">Eu preciso saber mexer em computador?</summary>
           <div class="a">Não. O painel foi feito pra ser usado no celular, entre um atendimento e outro. Eu te ensino, e o que você mais vai usar — ver a agenda, marcar, cancelar — são dois toques.</div>
-        </div>
-        <div class="qa">
-          <div class="q">E se eu quiser mudar um preço ou um horário?</div>
+        </details>
+        <details class="qa" open>
+          <summary class="q">E se eu quiser mudar um preço ou um horário?</summary>
           <div class="a">Você muda sozinha, na hora, pelo painel. Preço, duração, foto do serviço, horário de funcionamento, folga — nada disso precisa passar por mim.</div>
-        </div>
-        <div class="qa">
-          <div class="q">Além do que eu pago pra você, tem outro custo?</div>
+        </details>
+        <details class="qa" open>
+          <summary class="q">Além do que eu pago pra você, tem outro custo?</summary>
           <div class="a">Tem, e eu mostro na proposta sem embutir nada: o servidor onde o site fica hospedado e as mensagens de WhatsApp, que a Meta cobra por conversa. No plano mensal a hospedagem já está inclusa. São valores de terceiros, não meus.</div>
-        </div>
-        <div class="qa">
-          <div class="q">E os dados das minhas clientes?</div>
+        </details>
+        <details class="qa" open>
+          <summary class="q">E os dados das minhas clientes?</summary>
           <div class="a">Ficam no seu banco de dados, com política de privacidade e consentimento explícito no site, como a LGPD exige. Backup automático todo dia, guardado fora do servidor. Se um dia você quiser sair, os dados vão com você.</div>
-        </div>
-        <div class="qa">
-          <div class="q">Já tenho Instagram. Preciso de site?</div>
+        </details>
+        <details class="qa" open>
+          <summary class="q">Já tenho Instagram. Preciso de site?</summary>
           <div class="a">O Instagram mostra o seu trabalho; ele não marca horário, não cobra sinal e não lembra a cliente de que ela vem amanhã. O site é onde quem já te achou consegue fechar sozinha, às onze da noite, sem você.</div>
-        </div>
-        <div class="qa">
-          <div class="q">Quanto tempo leva?</div>
+        </details>
+        <details class="qa" open>
+          <summary class="q">Quanto tempo leva?</summary>
           <div class="a">Depende do escopo, e o prazo vai por escrito na proposta. O que não muda é a ordem: nada vai pro ar antes de você ter usado e aprovado no ambiente de teste.</div>
-        </div>
+        </details>
       </div>
     </div>
   </div>
@@ -892,6 +900,17 @@
     Falar no WhatsApp
   </a>
 </div>
+
+<script>
+  /* No computador as perguntas ficam todas abertas (é assim que vêm no HTML,
+     então funciona mesmo sem JS). No celular, onde o comprimento pesa, só a
+     primeira fica aberta — o resto abre no toque. */
+  (function () {
+    if (!window.matchMedia || !window.matchMedia('(max-width: 760px)').matches) return;
+    var qas = document.querySelectorAll('.qa');
+    for (var i = 1; i < qas.length; i++) qas[i].removeAttribute('open');
+  })();
+</script>
 
 </body>
 </html>
