@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seu salão, seu sistema — Jordan Souza</title>
+<meta name="description" content="Site com agendamento online, sinal por PIX e painel de gestão, feitos sob medida pro jeito que o seu salão atende. Case real em produção: Ariane Paiva Studio.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://jordansouzadev.github.io/sistemas-sob-medida/salao-claro.html">
+<meta property="og:title" content="Sua cliente quer marcar às 23h47. Quem responde?">
+<meta property="og:description" content="Agendamento online, sinal por PIX e painel próprio — feitos pro jeito que o seu salão atende. Já em produção num studio de unhas no Rio.">
+<meta property="og:image" content="https://jordansouzadev.github.io/sistemas-sob-medida/imagens/preview-salao-claro.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FCFAF8">
+<link rel="canonical" href="https://jordansouzadev.github.io/sistemas-sob-medida/salao-claro.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23231A1E'/%3E%3Ccircle cx='20' cy='32' r='5' fill='%23C2597F'/%3E%3Crect x='30' y='29' width='24' height='6' rx='2' fill='%23FCFAF8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* neutros quentes, com viés de vinho — escolhidos, não herdados */
+    --paper: #FCFAF8;
+    --paper-alt: #F4EDE8;
+    --ink: #1E1719;
+    --muted: #6B5A60;
+    --rule: #E6D8D2;
+    --rule-soft: #F0E6E1;
+
+    /* acento: vinho profundo + latão para marcas pequenas */
+    --accent: #7A2E52;
+    --accent-ink: #5E2240;
+    --accent-soft: rgba(122, 46, 82, 0.09);
+    --brass: #8F6237;
+    --on-accent: #FFFFFF;
+
+    /* superfícies escuras da página, em preto-ameixa e não em preto frio */
+    --deep: #231A1E;
+    --deep-2: #33262C;
+    --deep-mut: #A8969C;
+    --deep-dim: #7C6A71;
+
+    --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --wrap: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--on-accent); }
+  a { color: var(--accent-ink); }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+  @media (max-width: 480px) { .wrap { padding: 0 20px; } }
+
+  .mono { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.10em; text-transform: uppercase; }
+
+  /* ---- faixa de status ---- */
+  .strip { background: var(--deep); color: #FFFFFF; padding: 10px 0; }
+  .strip .wrap { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+  .strip-live { display: flex; align-items: center; gap: 9px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #C2597F; flex: none; animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+  .strip a { color: #FFFFFF; }
+  .strip a:hover { color: #E39BB6; }
+  .strip-right { color: var(--deep-mut); }
+  @media (max-width: 660px) { .strip-right { display: none; } }
+
+  /* ---- hero ---- */
+  .hero { position: relative; padding: 88px 0 72px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 58% at 50% 24%, black 0%, transparent 74%);
+    mask-image: radial-gradient(ellipse 70% 58% at 50% 24%, black 0%, transparent 74%);
+    opacity: 0.85;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow { color: var(--accent); margin-bottom: 22px; }
+  h1 { margin: 0 0 24px; font-size: clamp(2.25rem, 5.6vw, 4.05rem); font-weight: 700; letter-spacing: -0.032em; line-height: 1.05; max-width: 17ch; text-wrap: balance; }
+  .hero-sub { margin: 0 0 34px; font-size: clamp(1.04rem, 1.9vw, 1.28rem); color: var(--muted); max-width: 58ch; text-wrap: pretty; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 13px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: var(--mono); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+    padding: 15px 24px; border-radius: 4px; text-decoration: none; min-height: 50px;
+    border: 1px solid transparent;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: var(--accent-ink); color: var(--on-accent); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+  .hero-meta { margin-top: 42px; padding-top: 20px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: 9px 26px; color: var(--muted); }
+
+  /* ---- seções ---- */
+  section { border-top: 1px solid var(--rule); }
+  .band { background: var(--paper-alt); }
+  .sec { padding: 78px 0; }
+  .sec-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 52px; align-items: start; }
+  @media (max-width: 900px) { .sec-grid { grid-template-columns: 1fr; gap: 22px; } }
+  .sec-label { color: var(--accent); padding-top: 9px; }
+  h2 { margin: 0 0 18px; font-size: clamp(1.66rem, 3.2vw, 2.45rem); font-weight: 700; letter-spacing: -0.026em; line-height: 1.12; max-width: 20ch; text-wrap: balance; }
+  .lede { margin: 0; color: var(--muted); max-width: 62ch; font-size: 1.07rem; text-wrap: pretty; }
+
+  /* ---- linhas ---- */
+  .rows { margin-top: 34px; display: flex; flex-direction: column; }
+  .row { display: flex; flex-direction: column; gap: 4px; padding: 22px 0; border-top: 1px solid var(--rule); }
+  .row:last-child { border-bottom: 1px solid var(--rule); }
+  .row-t { font-weight: 600; letter-spacing: -0.012em; }
+  .row-d { color: var(--muted); max-width: 62ch; text-wrap: pretty; }
+
+  /* ---- passos ---- */
+  .steps { margin: 34px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 880px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .step { border-top: 3px solid var(--accent); padding: 15px 0 0; display: flex; flex-direction: column; gap: 4px; }
+  .step-n { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+  .step-t { font-weight: 600; letter-spacing: -0.012em; }
+  .step-d { font-size: 0.92rem; color: var(--muted); }
+
+  /* ---- recursos ---- */
+  .feats { margin-top: 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 46px; }
+  @media (max-width: 740px) { .feats { grid-template-columns: minmax(0, 1fr); } }
+  .feat { display: flex; flex-direction: column; gap: 4px; padding: 19px 0; border-top: 1px solid var(--rule); }
+  .feat-h { display: flex; align-items: center; gap: 11px; }
+  .feat-h svg { flex: none; color: var(--accent); }
+  .feat-t { font-weight: 600; letter-spacing: -0.012em; }
+  .feat-d { font-size: 0.94rem; color: var(--muted); }
+
+  /* ---- agenda ---- */
+  .demo { margin-top: 36px; }
+  .demo-cap { color: var(--muted); margin-bottom: 11px; }
+  .agenda { border: 1px solid var(--rule); background: #FFFFFF; box-shadow: 0 20px 44px -32px rgba(30, 23, 25, 0.5); }
+  .agenda-top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding: 15px 20px; border-bottom: 1px solid var(--rule); background: var(--paper-alt); }
+  .agenda-day { font-weight: 600; letter-spacing: -0.012em; }
+  .agenda-count { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .appt { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 14px 20px; border-top: 1px solid var(--rule-soft); }
+  .appt:first-of-type { border-top: 0; }
+  @media (max-width: 640px) { .appt { grid-template-columns: 58px minmax(0, 1fr); row-gap: 7px; } .appt-right { grid-column: 2; justify-content: flex-start; } }
+  .appt-time { font-family: var(--mono); font-size: 0.98rem; font-weight: 500; font-variant-numeric: tabular-nums; align-self: start; }
+  .appt-who { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .appt-name { font-weight: 600; letter-spacing: -0.012em; }
+  .appt-svc { font-size: 0.89rem; color: var(--muted); }
+  .appt-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .pill { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 9px; border-radius: 3px; white-space: nowrap; }
+  .pill-ok { background: var(--accent-soft); color: var(--accent-ink); }
+  .pill-paid { background: var(--accent); color: var(--on-accent); }
+  .pill-wait { background: var(--rule); color: var(--muted); }
+  .appt-val { font-family: var(--mono); font-size: 0.85rem; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+  /* ---- case ---- */
+  .case-shot { margin-top: 34px; border: 1px solid var(--rule); box-shadow: 0 26px 52px -34px rgba(30, 23, 25, 0.6); }
+  .case-bar { display: flex; align-items: center; gap: 13px; background: var(--deep); padding: 0 14px; height: 40px; }
+  .case-bar-dots { display: flex; gap: 6px; flex: none; }
+  .case-bar-dots span { width: 8px; height: 8px; border-radius: 50%; background: #4A3940; }
+  .case-url { flex-grow: 1; background: var(--deep-2); border-radius: 3px; padding: 5px 11px; font-family: var(--mono); font-size: 0.72rem; color: var(--deep-mut); display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .case-url span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pframe { max-width: 290px; margin: 0 auto; border: 8px solid var(--deep); border-radius: 30px; overflow: hidden; background: var(--deep); box-shadow: 0 24px 48px -28px rgba(30, 23, 25, 0.7); }
+  .pframe img { border-radius: 22px; }
+  .pcap { margin-top: 13px; text-align: center; color: var(--muted); }
+
+  .chips { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 9px; }
+  .chip { font-family: var(--mono); font-size: 0.73rem; letter-spacing: 0.04em; border: 1px solid var(--rule); padding: 7px 12px; color: var(--ink); }
+  .case-facts { margin-top: 30px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+  @media (max-width: 740px) { .case-facts { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
+  .fact { border-top: 2px solid var(--brass); padding-top: 13px; display: flex; flex-direction: column; gap: 4px; }
+  .fact-k { color: var(--brass); }
+  .fact-v { font-size: 0.97rem; }
+  .case-links { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 13px; }
+
+  /* ---- processo ---- */
+  .proc { margin: 34px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+  .proc-item { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 20px; padding: 23px 0; border-top: 1px solid var(--rule); }
+  .proc-item:last-child { border-bottom: 1px solid var(--rule); }
+  .proc-n { font-family: var(--mono); font-size: 0.85rem; font-weight: 600; color: var(--accent); padding-top: 4px; }
+  .proc-body { display: flex; flex-direction: column; gap: 3px; }
+  .proc-t { font-weight: 600; letter-spacing: -0.014em; font-size: 1.08rem; }
+  .proc-d { color: var(--muted); max-width: 60ch; text-wrap: pretty; }
+
+  /* ---- perguntas ---- */
+  .faq { margin-top: 34px; display: flex; flex-direction: column; }
+  .qa { padding: 23px 0; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; }
+  .qa:last-child { border-bottom: 1px solid var(--rule); }
+  .q { font-weight: 600; letter-spacing: -0.014em; font-size: 1.08rem; }
+  .a { color: var(--muted); max-width: 64ch; text-wrap: pretty; }
+
+  /* ---- fechamento ---- */
+  .close { background: var(--deep); color: #FFFFFF; padding: 84px 0; border-top: 0; }
+  .close h2 { color: #FFFFFF; max-width: 18ch; }
+  .close .lede { color: var(--deep-mut); }
+  .close .sec-label { color: #E39BB6; }
+  .contacts { margin-top: 42px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 34px; }
+  @media (max-width: 780px) { .contacts { grid-template-columns: minmax(0, 1fr); } }
+  .contact { border-top: 1px solid #423238; padding: 19px 0; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: #FFFFFF; }
+  a.contact:hover { color: #FFFFFF; }
+  a.contact:hover .contact-v { color: #E39BB6; }
+  .contact-k { font-family: var(--mono); font-size: 0.71rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--deep-dim); }
+  .contact-v { font-size: 1.06rem; font-weight: 600; letter-spacing: -0.014em; overflow-wrap: anywhere; transition: color 0.2s ease; }
+
+  footer { background: var(--deep); color: var(--deep-dim); padding: 24px 0 42px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 11px 24px; justify-content: space-between; align-items: center; }
+  footer a { color: var(--deep-mut); }
+  footer a:hover { color: #E39BB6; }
+
+  /* ================= celular ================= */
+  .only-mob { display: none; }
+  .dock { display: none; }
+
+  @media (max-width: 760px) {
+    .only-mob { display: block; }
+    .only-desk { display: none; }
+
+    body { font-size: 16px; }
+
+    .sec { padding: 46px 0; }
+    .hero { padding: 40px 0 44px; }
+    .close { padding: 52px 0; }
+    .sec-grid { gap: 16px; }
+    .sec-label { padding-top: 0; }
+
+    h1 { font-size: clamp(1.95rem, 8.4vw, 2.6rem); margin-bottom: 18px; }
+    .hero-sub { font-size: 1.02rem; margin-bottom: 26px; }
+    h2 { font-size: 1.52rem; margin-bottom: 12px; }
+    .lede { font-size: 1rem; }
+    .eyebrow { margin-bottom: 18px; }
+    .hero-meta { margin-top: 30px; padding-top: 16px; }
+
+    .cta-row { gap: 10px; }
+    .cta-row .btn, .case-links .btn { width: 100%; }
+
+    .rows { margin-top: 24px; }
+    .row { padding: 18px 0; }
+    .proc { margin-top: 24px; }
+    .proc-item { grid-template-columns: 34px minmax(0, 1fr); gap: 14px; padding: 18px 0; }
+    .proc-t { font-size: 1.02rem; }
+
+    .steps { gap: 10px; margin-top: 24px; }
+    .step { padding: 12px 0 0; }
+    .step-t { font-size: 0.97rem; }
+    .step-d { font-size: 0.85rem; }
+
+    .feats { margin-top: 28px; }
+    .feat { padding: 15px 0; }
+    .feat-t { font-size: 0.97rem; }
+    .feat-d { font-size: 0.88rem; line-height: 1.45; }
+
+    .demo { margin-top: 28px; }
+    .agenda-top { padding: 13px 15px; }
+    .agenda-day { font-size: 0.97rem; }
+    .appt { padding: 12px 15px; gap: 12px; }
+    .appt-time { font-size: 0.9rem; }
+    .appt-name { font-size: 0.94rem; }
+    .appt-svc { font-size: 0.83rem; }
+
+    .faq { margin-top: 24px; }
+    .qa { padding: 18px 0; }
+    .q { font-size: 1.02rem; }
+    .a { font-size: 0.97rem; }
+
+    .chips { margin-top: 20px; gap: 7px; }
+    .chip { font-size: 0.68rem; padding: 6px 10px; }
+    .case-facts { margin-top: 24px; gap: 14px; }
+    .case-links { margin-top: 26px; gap: 10px; }
+    .contacts { margin-top: 30px; }
+    .contact { padding: 16px 0; }
+    .contact-v { font-size: 1rem; }
+
+    footer { padding-bottom: 96px; }
+
+    .dock {
+      display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+      background: rgba(252, 250, 248, 0.95); backdrop-filter: blur(10px);
+      border-top: 1px solid var(--rule); padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    }
+    .dock a {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--accent); color: var(--on-accent); text-decoration: none;
+      border-radius: 8px; padding: 15px 18px; min-height: 52px;
+      font-family: var(--mono); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="strip-live mono">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Em produção:</span>
+      <a href="https://www.arianepaivastudio.com.br" target="_blank" rel="noopener">arianepaivastudio.com.br</a>
+    </div>
+    <div class="strip-right mono">Jordan Souza · Rio de Janeiro</div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow mono">Sistemas sob medida para salões e estúdios</div>
+    <h1>Sua cliente quer marcar às 23h47. Quem responde?</h1>
+    <p class="hero-sub">Eu construo o site com agendamento online, sinal por PIX e painel próprio — feito pro jeito que o seu salão atende, não pro jeito que um sistema de prateleira acha que você devia atender.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://wa.me/5521960204688" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.2A8.3 8.3 0 1 1 8.1 19l-4.6 1.5Z"></path></svg>
+        Falar comigo no WhatsApp
+      </a>
+      <a class="btn btn-ghost" href="#case">Ver um sistema funcionando</a>
+    </div>
+    <div class="hero-meta mono">
+      <span>Agendamento 24h</span>
+      <span>Sinal por PIX</span>
+      <span>Lembrete no WhatsApp</span>
+      <span>Painel no celular</span>
+    </div>
+  </div>
+</header>
+
+<section class="band">
+  <div class="sec wrap sec-grid">
+    <div class="sec-label mono">O problema</div>
+    <div>
+      <h2>O caderno e o WhatsApp cobram caro.</h2>
+      <p class="lede">Nada disso é desorganização sua. É trabalho manual que já devia ser do sistema — e que hoje sai do seu tempo e do seu faturamento.</p>
+      <div class="rows">
+        <div class="row">
+          <div class="row-t">A mensagem chega às onze da noite</div>
+          <div class="row-d">Se ninguém responde na hora, ela pergunta pro salão do lado. Você só descobre no dia seguinte que perdeu o horário.</div>
+        </div>
+        <div class="row">
+          <div class="row-t">Dois nomes no mesmo horário</div>
+          <div class="row-d">Alguém volta pra casa sem ser atendida — e leva junto a impressão de que o salão é bagunçado.</div>
+        </div>
+        <div class="row">
+          <div class="row-t">Faltou e não avisou</div>
+          <div class="row-d">O horário morre e ninguém paga por ele. Sem sinal, faltar não custa nada pra quem marcou.</div>
+        </div>
+        <div class="row">
+          <div class="row-t">Atender e responder ao mesmo tempo</div>
+          <div class="row-d">As duas coisas saem pior. A cliente na cadeira percebe, e a do celular também.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec wrap sec-grid">
+    <div class="sec-label mono">Do lado da cliente</div>
+    <div>
+      <h2>Ela marca sozinha, a qualquer hora.</h2>
+      <p class="lede">Cinco passos, sem criar conta, direto do celular. Ela escolhe, confirma e recebe tudo por escrito.</p>
+      <ol class="steps">
+        <li class="step"><span class="step-n">01</span><span class="step-t">Serviço</span><span class="step-d">Com preço e duração na tela.</span></li>
+        <li class="step"><span class="step-n">02</span><span class="step-t">Data</span><span class="step-d">Só os dias em que você abre.</span></li>
+        <li class="step"><span class="step-n">03</span><span class="step-t">Horário</span><span class="step-d">Só o que está livre de verdade.</span></li>
+        <li class="step"><span class="step-n">04</span><span class="step-t">Dados</span><span class="step-d">Nome, telefone e e-mail.</span></li>
+        <li class="step"><span class="step-n">05</span><span class="step-t">Confirmação</span><span class="step-d">Com sinal por PIX, se você quiser.</span></li>
+      </ol>
+
+      <div class="demo only-mob">
+        <div class="pframe">
+          <img src="imagens/ariane-mobile-agendar.jpg" width="560" height="1154" alt="Tela de agendamento aberta no celular, mostrando os cinco passos e os serviços com preço e duração">
+        </div>
+        <p class="pcap mono">A tela real, no celular da sua cliente</p>
+      </div>
+
+      <div class="rows">
+        <div class="row">
+          <div class="row-t">O horário que aparece existe</div>
+          <div class="row-d">A disponibilidade é calculada no servidor a cada consulta, cruzando o seu expediente, os seus bloqueios e os agendamentos já marcados. Não dá pra marcar em cima de nada.</div>
+        </div>
+        <div class="row">
+          <div class="row-t">Confirmação e lembrete automáticos</div>
+          <div class="row-d">No WhatsApp e no e-mail, sem você digitar nada. O lembrete chega antes do horário — é o que faz a cliente lembrar, ou avisar a tempo de você encaixar outra.</div>
+        </div>
+        <div class="row">
+          <div class="row-t">Sinal por PIX com baixa automática</div>
+          <div class="row-d">QR code na hora de confirmar, e o sistema reconhece o pagamento sozinho. Quem marca, se compromete.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="sec wrap sec-grid">
+    <div class="sec-label mono">Do seu lado</div>
+    <div>
+      <h2>Um painel que cabe no celular.</h2>
+      <p class="lede">Abre no navegador, sem instalar nada. E você mesma muda preço, horário e foto — sem depender de mim.</p>
+
+      <div class="demo">
+        <div class="demo-cap mono">Exemplo de agenda do dia</div>
+        <div class="agenda">
+          <div class="agenda-top">
+            <span class="agenda-day">Sexta, 18 de setembro</span>
+            <span class="agenda-count">4 atendimentos · R$ 405,00</span>
+          </div>
+          <div class="appt">
+            <span class="appt-time">08:00</span>
+            <span class="appt-who"><span class="appt-name">Camila Rocha</span><span class="appt-svc">Banho de gel</span></span>
+            <span class="appt-right"><span class="pill pill-paid">Sinal pago</span><span class="appt-val">R$ 90,00</span></span>
+          </div>
+          <div class="appt">
+            <span class="appt-time">10:00</span>
+            <span class="appt-who"><span class="appt-name">Fernanda Alves</span><span class="appt-svc">Molde F1 · Decoração elaborada</span></span>
+            <span class="appt-right"><span class="pill pill-ok">Confirmado</span><span class="appt-val">R$ 135,00</span></span>
+          </div>
+          <div class="appt">
+            <span class="appt-time">14:00</span>
+            <span class="appt-who"><span class="appt-name">Juliana Prado</span><span class="appt-svc">Esmaltação em gel (mão)</span></span>
+            <span class="appt-right"><span class="pill pill-ok">Confirmado</span><span class="appt-val">R$ 70,00</span></span>
+          </div>
+          <div class="appt">
+            <span class="appt-time">16:00</span>
+            <span class="appt-who"><span class="appt-name">Horário bloqueado</span><span class="appt-svc">Almoço</span></span>
+            <span class="appt-right"><span class="pill pill-wait">Bloqueio</span></span>
+          </div>
+          <div class="appt">
+            <span class="appt-time">18:00</span>
+            <span class="appt-who"><span class="appt-name">Thaís Souza</span><span class="appt-svc">Gel na tip</span></span>
+            <span class="appt-right"><span class="pill pill-ok">Confirmado</span><span class="appt-val">R$ 110,00</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feats">
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 3v4"></path><path d="M16 3v4"></path></svg>
+            <span class="feat-t">Agenda</span>
+          </div>
+          <div class="feat-d">Dia, semana e mês. Cria, edita, conclui ou cancela pelo celular.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-4A3.5 3.5 0 0 0 5 18.5V20"></path><circle cx="10.5" cy="8" r="3.5"></circle><path d="M19 20v-1.5a3.5 3.5 0 0 0-2.6-3.4"></path></svg>
+            <span class="feat-t">Clientes</span>
+          </div>
+          <div class="feat-d">Histórico de atendimentos, contato e quem faz aniversário no mês.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-7"></path><path d="M22 20H2"></path></svg>
+            <span class="feat-t">Faturamento</span>
+          </div>
+          <div class="feat-d">Gráfico e filtro por período, separado por forma de pagamento.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12.5 12 21l-8.5-8.5V4H12l8.5 8.5Z"></path><path d="M7.5 7.5h.01"></path></svg>
+            <span class="feat-t">Serviços e preços</span>
+          </div>
+          <div class="feat-d">Você mesma altera valor, duração e foto quando quiser.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8.5" cy="9.5" r="1.8"></circle><path d="m3.5 17 5-5 4.5 4.5 3-3 4.5 4.5"></path></svg>
+            <span class="feat-t">Galeria</span>
+          </div>
+          <div class="feat-d">Sobe a foto do trabalho direto do celular, na hora.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 17l-5.3 2.7 1.1-5.9-4.3-4.1 5.9-.8L12 3.5Z"></path></svg>
+            <span class="feat-t">Depoimentos</span>
+          </div>
+          <div class="feat-d">A cliente escreve pelo site e você aprova antes de publicar.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="m6.5 6.5 11 11"></path></svg>
+            <span class="feat-t">Bloqueios e expediente</span>
+          </div>
+          <div class="feat-d">Folga, almoço ou imprevisto: ninguém consegue marcar em cima.</div>
+        </div>
+        <div class="feat">
+          <div class="feat-h">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"></ellipse><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"></path><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"></path></svg>
+            <span class="feat-t">Backup diário</span>
+          </div>
+          <div class="feat-d">Cópia automática do banco todo dia, guardada fora do servidor.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="case">
+  <div class="sec wrap sec-grid">
+    <div class="sec-label mono">Case em produção</div>
+    <div>
+      <h2>Ariane Paiva Studio</h2>
+      <p class="lede">Studio de unhas no Rio de Janeiro. Site, agendamento, pagamento e painel — no ar e em uso todo dia. Não é protótipo: é o sistema que a Ariane usa pra trabalhar.</p>
+
+      <div class="only-desk">
+        <div class="case-shot">
+          <div class="case-bar">
+            <span class="case-bar-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="case-url">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E39BB6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+              <span>www.arianepaivastudio.com.br</span>
+            </span>
+          </div>
+          <img src="imagens/ariane-home.jpg" width="1280" height="800" alt="Página inicial do site do Ariane Paiva Studio, com o nome do studio, a foto da profissional e o botão de agendar horário">
+        </div>
+      </div>
+      <div class="only-mob" style="margin-top: 28px;">
+        <div class="pframe">
+          <img src="imagens/ariane-mobile-home.jpg" width="560" height="1154" alt="Site do Ariane Paiva Studio aberto no celular, com o botão de agendar horário">
+        </div>
+        <p class="pcap mono">No celular · em produção</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip">Agendamento online</span>
+        <span class="chip">Sinal por PIX</span>
+        <span class="chip">WhatsApp automático</span>
+        <span class="chip">Painel admin</span>
+        <span class="chip">Galeria e depoimentos</span>
+        <span class="chip">Instalável no celular</span>
+      </div>
+
+      <div class="case-facts">
+        <div class="fact">
+          <span class="fact-k mono">Papel</span>
+          <span class="fact-v">Full stack, do zero ao deploy — sozinho.</span>
+        </div>
+        <div class="fact">
+          <span class="fact-k mono">Construído com</span>
+          <span class="fact-v">FastAPI e PostgreSQL no servidor; React e TypeScript no site.</span>
+        </div>
+        <div class="fact">
+          <span class="fact-k mono">Em operação</span>
+          <span class="fact-v">Testes automatizados, deploy automático e backup diário.</span>
+        </div>
+      </div>
+
+      <div class="case-links">
+        <a class="btn btn-primary" href="https://www.arianepaivastudio.com.br" target="_blank" rel="noopener">Abrir o site ao vivo</a>
+        <a class="btn btn-ghost" href="https://github.com/jordansouzadev/ariane-paiva-studio-case-study" target="_blank" rel="noopener">Ver o case study</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="sec wrap sec-grid">
+    <div class="sec-label mono">Como funciona</div>
+    <div>
+      <h2>Do primeiro papo ao sistema no ar.</h2>
+      <p class="lede">Você não precisa saber nada de tecnologia. Precisa saber como o seu salão atende — essa parte só você sabe.</p>
+      <ol class="proc">
+        <li class="proc-item">
+          <span class="proc-n">01</span>
+          <span class="proc-body">
+            <span class="proc-t">Conversa</span>
+            <span class="proc-d">Como você trabalha hoje: serviços, duração de cada um, horário, folga, quem atende e o que mais te atrapalha no dia a dia.</span>
+          </span>
+        </li>
+        <li class="proc-item">
+          <span class="proc-n">02</span>
+          <span class="proc-body">
+            <span class="proc-t">Proposta fechada</span>
+            <span class="proc-d">Escopo, prazo e valor por escrito antes de começar. Você aprova sabendo exatamente o que vem — e o que não vem.</span>
+          </span>
+        </li>
+        <li class="proc-item">
+          <span class="proc-n">03</span>
+          <span class="proc-body">
+            <span class="proc-t">Construção, com você vendo</span>
+            <span class="proc-d">Monto num ambiente de teste, separado do que vai pro ar. Você acompanha, usa e pede ajuste antes de qualquer cliente ver.</span>
+          </span>
+        </li>
+        <li class="proc-item">
+          <span class="proc-n">04</span>
+          <span class="proc-body">
+            <span class="proc-t">No ar, e treinamento</span>
+            <span class="proc-d">Publico o site, configuro o WhatsApp e o PIX, e te ensino a mexer no painel até você estar segura sozinha.</span>
+          </span>
+        </li>
+        <li class="proc-item">
+          <span class="proc-n">05</span>
+          <span class="proc-body">
+            <span class="proc-t">Depois da entrega</span>
+            <span class="proc-d">Continuo por perto pro que quebrar ou mudar, com backup diário rodando. Você não fica sozinha com o sistema.</span>
+          </span>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec wrap sec-grid">
+    <div class="sec-label mono">Perguntas</div>
+    <div>
+      <h2>O que todo mundo pergunta antes.</h2>
+      <div class="faq">
+        <div class="qa">
+          <div class="q">Quanto custa?</div>
+          <div class="a">Depende do tamanho: quantos serviços, se vai ter pagamento online, se atende mais de uma profissional. Eu te passo um valor fechado depois da primeira conversa, antes de começar qualquer coisa — sem surpresa no meio do caminho.</div>
+        </div>
+        <div class="qa">
+          <div class="q">Eu preciso saber mexer em computador?</div>
+          <div class="a">Não. O painel foi feito pra ser usado no celular, entre um atendimento e outro. Eu te ensino, e o que você mais vai usar — ver a agenda, marcar, cancelar — são dois toques.</div>
+        </div>
+        <div class="qa">
+          <div class="q">E se eu quiser mudar um preço ou um horário?</div>
+          <div class="a">Você muda sozinha, na hora, pelo painel. Preço, duração, foto do serviço, horário de funcionamento, folga — nada disso precisa passar por mim.</div>
+        </div>
+        <div class="qa">
+          <div class="q">O sistema é meu ou eu alugo?</div>
+          <div class="a">O sistema é feito pra você e fica seu. Existem custos de funcionamento que são de terceiros e seguem mensais: o servidor onde o site fica hospedado e as mensagens de WhatsApp, cobradas por conversa. Eu te mostro esses números na proposta, sem embutir nada.</div>
+        </div>
+        <div class="qa">
+          <div class="q">E os dados das minhas clientes?</div>
+          <div class="a">Ficam no seu banco de dados, com política de privacidade e consentimento explícito no site, como a LGPD exige. Backup automático todo dia, guardado fora do servidor. Se um dia você quiser sair, os dados vão com você.</div>
+        </div>
+        <div class="qa">
+          <div class="q">Já tenho Instagram. Preciso de site?</div>
+          <div class="a">O Instagram mostra o seu trabalho; ele não marca horário, não cobra sinal e não lembra a cliente de que ela vem amanhã. O site é onde quem já te achou consegue fechar sozinha, às onze da noite, sem você.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap sec-grid">
+    <div class="sec-label mono">Vamos conversar</div>
+    <div>
+      <h2>Não é template. É o seu jeito de atender, virado sistema.</h2>
+      <p class="lede">Me conta como o salão funciona hoje. Se der pra resolver com alguma coisa que já existe pronta no mercado, eu falo isso na primeira conversa — de graça.</p>
+      <div class="contacts">
+        <a class="contact" href="https://wa.me/5521960204688" target="_blank" rel="noopener">
+          <span class="contact-k">WhatsApp</span>
+          <span class="contact-v">(21) 96020-4688</span>
+        </a>
+        <a class="contact" href="mailto:jordan.developerbr@outlook.com">
+          <span class="contact-k">E-mail</span>
+          <span class="contact-v">jordan.developerbr@outlook.com</span>
+        </a>
+        <a class="contact" href="https://jordansouzadev.github.io">
+          <span class="contact-k">Portfólio</span>
+          <span class="contact-v">jordansouzadev.github.io</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">Jordan Souza · Desenvolvedor full stack</span>
+    <span class="mono">Rio de Janeiro — atendimento remoto</span>
+  </div>
+</footer>
+
+<div class="dock">
+  <a href="https://wa.me/5521960204688" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.2A8.3 8.3 0 1 1 8.1 19l-4.6 1.5Z"></path></svg>
+    Falar no WhatsApp
+  </a>
+</div>
+
+</body>
+</html>
